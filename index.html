@@ -491,8 +491,7 @@
 <div class="tabs">
   <button class="tab-btn active" onclick="showSection('overview')">한눈에 보기</button>
   <button class="tab-btn" onclick="showSection('compare')">상세 비교</button>
-  <button class="tab-btn" onclick="showSection('gallery-suwon')">수원 마이어스</button>
-  <button class="tab-btn" onclick="showSection('gallery-sindorim')">신도림 베니비스</button>
+  <button class="tab-btn" onclick="showSection('gallery')">현장답사 사진/영상</button>
 </div>
 
 <!-- ==================== 한눈에 보기 ==================== -->
@@ -611,6 +610,7 @@
             <span class="tag con">테크노마트 건물 어수선 + 엘베 대기</span>
             <span class="tag con">천고 낮음</span>
             <span class="tag con">버진로드 낮음 (뒷줄 시야 제한)</span>
+            <span class="tag con">홀 내 기둥 6개 (시야 가림)</span>
           </div>
         </div>
       </div>
@@ -863,21 +863,27 @@
   </div>
 </div>
 
-<!-- ==================== 수원 마이어스 갤러리 ==================== -->
-<div id="gallery-suwon" class="section">
-  <div class="gallery-section">
-    <h3>그레이스홀 <span class="hall-badge badge-suwon">수원 마이어스</span></h3>
-    <div class="gallery-grid" id="grid-suwon-grace"></div>
-    <div class="video-grid" id="video-suwon-grace"></div>
+<!-- ==================== 현장답사 사진/영상 ==================== -->
+<div id="gallery" class="section">
+  <div style="display:flex;justify-content:center;gap:10px;margin-bottom:28px;">
+    <button onclick="showGallery('suwon')" id="gallery-btn-suwon" style="padding:10px 28px;border:2px solid var(--accent-b);border-radius:100px;background:var(--accent-b);color:white;font-weight:600;font-size:0.9rem;cursor:pointer;font-family:inherit;transition:all 0.2s;">수원 마이어스</button>
+    <button onclick="showGallery('sindorim')" id="gallery-btn-sindorim" style="padding:10px 28px;border:2px solid var(--accent-a);border-radius:100px;background:var(--card);color:var(--accent-a);font-weight:600;font-size:0.9rem;cursor:pointer;font-family:inherit;transition:all 0.2s;">신도림 베니비스</button>
   </div>
-</div>
 
-<!-- ==================== 신도림 베니비스 갤러리 ==================== -->
-<div id="gallery-sindorim" class="section">
-  <div class="gallery-section">
-    <h3>아스타홀 <span class="hall-badge badge-sindorim">신도림 베니비스</span></h3>
-    <div class="gallery-grid" id="grid-sindorim-asta"></div>
-    <div class="video-grid" id="video-sindorim-asta"></div>
+  <div id="gallery-content-suwon">
+    <div class="gallery-section">
+      <h3>그레이스홀 <span class="hall-badge badge-suwon">수원 마이어스</span></h3>
+      <div class="gallery-grid" id="grid-suwon-grace"></div>
+      <div class="video-grid" id="video-suwon-grace"></div>
+    </div>
+  </div>
+
+  <div id="gallery-content-sindorim" style="display:none;">
+    <div class="gallery-section">
+      <h3>아스타홀 <span class="hall-badge badge-sindorim">신도림 베니비스</span></h3>
+      <div class="gallery-grid" id="grid-sindorim-asta"></div>
+      <div class="video-grid" id="video-sindorim-asta"></div>
+    </div>
   </div>
 </div>
 
@@ -988,6 +994,29 @@ function renderVotes(votes) {
   renderGroup('vote-list-suwon', suwon, 'dot-suwon');
   renderGroup('vote-list-sindorim', sindorim, 'dot-sindorim');
 }
+
+// Gallery venue toggle
+window.showGallery = function(venue) {
+  const suwon = document.getElementById('gallery-content-suwon');
+  const sindorim = document.getElementById('gallery-content-sindorim');
+  const btnS = document.getElementById('gallery-btn-suwon');
+  const btnSi = document.getElementById('gallery-btn-sindorim');
+  if (venue === 'suwon') {
+    suwon.style.display = 'block';
+    sindorim.style.display = 'none';
+    btnS.style.background = 'var(--accent-b)';
+    btnS.style.color = 'white';
+    btnSi.style.background = 'var(--card)';
+    btnSi.style.color = 'var(--accent-a)';
+  } else {
+    suwon.style.display = 'none';
+    sindorim.style.display = 'block';
+    btnSi.style.background = 'var(--accent-a)';
+    btnSi.style.color = 'white';
+    btnS.style.background = 'var(--card)';
+    btnS.style.color = 'var(--accent-b)';
+  }
+};
 
 // Tab switching
 window.showSection = function(id) {
