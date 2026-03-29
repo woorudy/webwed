@@ -617,40 +617,55 @@
     </div>
   </div>
 
-  <!-- 가족 의견 -->
-  <details class="vote-section">
-    <summary style="cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;">
-      <h3 style="margin:0;">가족 의견</h3>
-      <span style="font-size:0.8rem;color:var(--muted);">참고용 (클릭하여 펼치기)</span>
-    </summary>
-    <div class="vote-bar-container" style="margin-top:20px;">
+  <!-- 투표 -->
+  <div class="vote-section">
+    <h3>투표</h3>
+
+    <!-- 투표 바 (실시간) -->
+    <div class="vote-bar-container">
       <div class="vote-labels">
-        <span>수원 마이어스 (3명)</span>
-        <span>신도림 베니비스 (2명)</span>
+        <span id="vote-label-suwon">수원 마이어스 (0명)</span>
+        <span id="vote-label-sindorim">신도림 베니비스 (0명)</span>
       </div>
       <div class="vote-bar">
-        <div class="suwon-fill" style="width:60%">60%</div>
-        <div class="sindorim-fill" style="width:40%">40%</div>
+        <div class="suwon-fill" id="vote-fill-suwon" style="width:50%">0%</div>
+        <div class="sindorim-fill" id="vote-fill-sindorim" style="width:50%">0%</div>
       </div>
     </div>
-    <div class="vote-list">
-      <div class="vote-group">
-        <h4>수원 선호</h4>
-        <div class="vote-person"><span class="vote-dot dot-suwon"></span> 은진</div>
-        <div class="vote-person"><span class="vote-dot dot-suwon"></span> 중원 엄마</div>
-        <div class="vote-person"><span class="vote-dot dot-suwon"></span> 은진 엄마</div>
+
+    <!-- 투표 폼 -->
+    <div id="vote-form" style="margin-top:24px;padding:24px;background:var(--highlight);border-radius:12px;">
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:end;">
+        <div style="flex:1;min-width:120px;">
+          <label style="display:block;font-size:0.75rem;color:var(--muted);margin-bottom:4px;">닉네임</label>
+          <input id="vote-name" type="text" placeholder="이름" style="width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:0.9rem;font-family:inherit;background:var(--card);">
+        </div>
+        <div style="min-width:200px;">
+          <label style="display:block;font-size:0.75rem;color:var(--muted);margin-bottom:4px;">선택</label>
+          <div style="display:flex;gap:8px;">
+            <button onclick="selectVote('suwon')" id="btn-suwon" class="vote-choice-btn" style="flex:1;padding:10px 16px;border:1.5px solid var(--accent-b);border-radius:10px;background:var(--card);color:var(--accent-b);font-weight:600;font-size:0.85rem;cursor:pointer;font-family:inherit;transition:all 0.2s;">수원</button>
+            <button onclick="selectVote('sindorim')" id="btn-sindorim" class="vote-choice-btn" style="flex:1;padding:10px 16px;border:1.5px solid var(--accent-a);border-radius:10px;background:var(--card);color:var(--accent-a);font-weight:600;font-size:0.85rem;cursor:pointer;font-family:inherit;transition:all 0.2s;">신도림</button>
+          </div>
+        </div>
       </div>
-      <div class="vote-group">
-        <h4>신도림 선호</h4>
-        <div class="vote-person"><span class="vote-dot dot-sindorim"></span> 중원</div>
-        <div class="vote-person"><span class="vote-dot dot-sindorim"></span> 중원 아빠</div>
+      <div style="margin-top:12px;">
+        <label style="display:block;font-size:0.75rem;color:var(--muted);margin-bottom:4px;">의견 (선택)</label>
+        <input id="vote-comment" type="text" placeholder="이유나 의견이 있다면..." style="width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:0.9rem;font-family:inherit;background:var(--card);">
       </div>
+      <button onclick="submitVote()" id="vote-submit" style="margin-top:12px;width:100%;padding:12px;border:none;border-radius:10px;background:var(--text);color:white;font-weight:600;font-size:0.9rem;cursor:pointer;font-family:inherit;transition:opacity 0.2s;">투표하기</button>
     </div>
+
+    <!-- 투표 목록 -->
+    <div id="vote-list-container" style="margin-top:24px;">
+      <div id="vote-list-suwon"></div>
+      <div id="vote-list-sindorim"></div>
+    </div>
+
     <div class="vote-reason">
-      <strong>수원파:</strong> 은진이네 하객 배려, 서울이 너무 북적이고 수원이 더 예쁨<br>
-      <strong>신도림파:</strong> 서울 쪽 손님이 더 많아서 접근성 우선
+      <strong style="color:var(--accent-b);">수원파:</strong> 은진이네 하객 배려, 서울이 너무 북적이고 수원이 더 예쁨<br>
+      <strong style="color:var(--accent-a);">신도림파:</strong> 서울 쪽 손님이 더 많아서 접근성 우선
     </div>
-  </details>
+  </div>
 </div>
 
 <!-- ==================== 상세 비교 ==================== -->
@@ -812,9 +827,108 @@
   <button class="lightbox-nav lightbox-next" onclick="navLightbox(event, 1)">&#8250;</button>
 </div>
 
-<script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBo7cRkls6j_oxyzlD57tStEfQmHqhSs1I",
+  authDomain: "webwed-f48eb.firebaseapp.com",
+  projectId: "webwed-f48eb",
+  storageBucket: "webwed-f48eb.firebasestorage.app",
+  messagingSenderId: "392867635969",
+  appId: "1:392867635969:web:081d2dd323cace74f37100"
+};
+
+const fbApp = initializeApp(firebaseConfig);
+const db = getFirestore(fbApp);
+
+// Vote state
+let selectedChoice = null;
+
+window.selectVote = function(choice) {
+  selectedChoice = choice;
+  document.getElementById('btn-suwon').style.background = choice === 'suwon' ? '#eef2ea' : 'var(--card)';
+  document.getElementById('btn-sindorim').style.background = choice === 'sindorim' ? '#f5efe8' : 'var(--card)';
+};
+
+window.submitVote = async function() {
+  const name = document.getElementById('vote-name').value.trim();
+  if (!name) return alert('닉네임을 입력해주세요.');
+  if (!selectedChoice) return alert('수원 또는 신도림을 선택해주세요.');
+  const comment = document.getElementById('vote-comment').value.trim();
+
+  try {
+    const docRef = await addDoc(collection(db, 'votes'), {
+      name, choice: selectedChoice, comment, createdAt: serverTimestamp()
+    });
+    // Save to localStorage so user can delete their own votes
+    const myVotes = JSON.parse(localStorage.getItem('myVotes') || '[]');
+    myVotes.push(docRef.id);
+    localStorage.setItem('myVotes', JSON.stringify(myVotes));
+
+    document.getElementById('vote-name').value = '';
+    document.getElementById('vote-comment').value = '';
+    selectedChoice = null;
+    document.getElementById('btn-suwon').style.background = 'var(--card)';
+    document.getElementById('btn-sindorim').style.background = 'var(--card)';
+  } catch (e) {
+    alert('투표 실패: ' + e.message);
+  }
+};
+
+window.deleteVote = async function(id) {
+  if (!confirm('이 투표를 삭제할까요?')) return;
+  try {
+    await deleteDoc(doc(db, 'votes', id));
+    const myVotes = JSON.parse(localStorage.getItem('myVotes') || '[]');
+    localStorage.setItem('myVotes', JSON.stringify(myVotes.filter(v => v !== id)));
+  } catch (e) {
+    alert('삭제 실패: ' + e.message);
+  }
+};
+
+// Realtime listener
+const q = query(collection(db, 'votes'), orderBy('createdAt', 'asc'));
+onSnapshot(q, (snapshot) => {
+  const votes = [];
+  snapshot.forEach(d => votes.push({ id: d.id, ...d.data() }));
+  renderVotes(votes);
+});
+
+function renderVotes(votes) {
+  const myVotes = JSON.parse(localStorage.getItem('myVotes') || '[]');
+  const suwon = votes.filter(v => v.choice === 'suwon');
+  const sindorim = votes.filter(v => v.choice === 'sindorim');
+  const total = votes.length || 1;
+  const sP = Math.round(suwon.length / total * 100);
+  const siP = 100 - sP;
+
+  document.getElementById('vote-label-suwon').textContent = `수원 마이어스 (${suwon.length}명)`;
+  document.getElementById('vote-label-sindorim').textContent = `신도림 베니비스 (${sindorim.length}명)`;
+  const fillS = document.getElementById('vote-fill-suwon');
+  const fillSi = document.getElementById('vote-fill-sindorim');
+  fillS.style.width = (votes.length ? sP : 50) + '%';
+  fillS.textContent = votes.length ? sP + '%' : '';
+  fillSi.style.width = (votes.length ? siP : 50) + '%';
+  fillSi.textContent = votes.length ? siP + '%' : '';
+
+  function renderGroup(containerId, list, dotClass) {
+    const el = document.getElementById(containerId);
+    el.innerHTML = list.map(v => {
+      const isMine = myVotes.includes(v.id);
+      const deleteBtn = isMine ? ` <button onclick="deleteVote('${v.id}')" style="background:none;border:none;color:var(--con);cursor:pointer;font-size:0.75rem;padding:2px 6px;border-radius:4px;font-family:inherit;">삭제</button>` : '';
+      const comment = v.comment ? `<span style="color:var(--muted);font-size:0.82rem;margin-left:4px;">— ${v.comment}</span>` : '';
+      return `<div class="vote-person"><span class="vote-dot ${dotClass}"></span> ${v.name}${comment}${deleteBtn}</div>`;
+    }).join('');
+  }
+
+  renderGroup('vote-list-suwon', suwon, 'dot-suwon');
+  renderGroup('vote-list-sindorim', sindorim, 'dot-sindorim');
+}
+
 // Tab switching
-function showSection(id) {
+window.showSection = function(id) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -883,7 +997,7 @@ const galleries = {
 let currentImages = [];
 let currentIndex = 0;
 
-function openLightbox(images, index) {
+window.openLightbox = function(images, index) {
   currentImages = images;
   currentIndex = index;
   document.getElementById('lightbox-img').src = images[index];
@@ -891,13 +1005,13 @@ function openLightbox(images, index) {
   document.body.style.overflow = 'hidden';
 }
 
-function closeLightbox(e) {
+window.closeLightbox = function(e) {
   if (e.target.classList.contains('lightbox-nav') || e.target.classList.contains('lightbox-prev') || e.target.classList.contains('lightbox-next')) return;
   document.getElementById('lightbox').classList.remove('open');
   document.body.style.overflow = '';
 }
 
-function navLightbox(e, dir) {
+window.navLightbox = function(e, dir) {
   e.stopPropagation();
   currentIndex = (currentIndex + dir + currentImages.length) % currentImages.length;
   document.getElementById('lightbox-img').src = currentImages[currentIndex];
