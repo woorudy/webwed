@@ -506,7 +506,7 @@
     <div class="card">
       <div class="card-header">
         <span class="venue-badge badge-suwon">수원</span>
-        <h2>마이어스 <span style="font-size:0.7em;color:var(--pro);font-weight:600;">&#10003; 계약완료 (예약 상담일이 달라 비교를 위한 투자) </span></h2>
+        <h2>마이어스 <span style="font-size:0.7em;color:var(--pro);font-weight:600;">&#10003; 계약완료</span></h2>
         <div class="location">수원터미널 &middot; 그레이스홀</div>
       </div>
       <div class="card-body">
@@ -564,22 +564,22 @@
     <div class="card">
       <div class="card-header">
         <span class="venue-badge badge-sindorim">신도림</span>
-        <h2>웨스턴 베니비스 <span style="font-size:0.7em;color:var(--con);font-weight:600;">3/19(일) 오전 10시까지 계약 필요</span></h2>
-        <div class="location">신도림역 &middot; 그레이스 / 아스타홀</div>
+        <h2>웨스턴 베니비스 <span style="font-size:0.7em;color:var(--pro);font-weight:600;">&#10003; 계약완료</span></h2>
+        <div class="location">신도림역 &middot; 아스타홀</div>
       </div>
       <div class="card-body">
         <div class="info-grid">
           <div class="info-item">
             <label>일정</label>
-            <div class="value">4/3(토) or 4/4(일)</div>
+            <div class="value">4/3(토) 13:20</div>
           </div>
           <div class="info-item">
             <label>대관+컨시어즈</label>
-            <div class="value price">토 590 / 일 460만</div>
+            <div class="value price">540만원</div>
           </div>
           <div class="info-item">
             <label>식대</label>
-            <div class="value">6.4만원/인</div>
+            <div class="value">6.3만원/인</div>
           </div>
           <div class="info-item">
             <label>식 간격</label>
@@ -587,11 +587,11 @@
           </div>
           <div class="info-item">
             <label>계약금</label>
-            <div class="value">200만원</div>
+            <div class="value" style="color:var(--pro);">200만원 (납부완료)</div>
           </div>
           <div class="info-item">
-            <label>취소 손실</label>
-            <div class="value risk-low">20만원만</div>
+            <label>취소 시</label>
+            <div class="value risk-low">20만원 손실</div>
           </div>
         </div>
         <div class="pros-cons">
@@ -604,13 +604,15 @@
             <span class="tag pro">뷔페 맛집 (130가지, 라이브쿠킹)</span>
             <span class="tag pro">동선 편리 (모두 7층)</span>
             <span class="tag pro">생화 꽃장식 포함</span>
+            <span class="tag pro">플라워샤워 기계식 자동</span>
           </div>
           <h4>단점</h4>
           <div class="tag-list">
             <span class="tag con">한 층에 홀 3개 혼잡</span>
-            <span class="tag con">전환 시 마이어스 50만원 손실</span>
             <span class="tag con">테크노마트 건물 어수선 + 엘베 대기</span>
             <span class="tag con">천고 낮음</span>
+            <span class="tag con">주차 출차 시 줄 대기</span>
+            <span class="tag con">버진로드 낮음 (뒷줄 시야 제한)</span>
           </div>
         </div>
       </div>
@@ -618,9 +620,12 @@
   </div>
 
   <!-- 가족 의견 -->
-  <div class="vote-section">
-    <h3>가족 의견</h3>
-    <div class="vote-bar-container">
+  <details class="vote-section">
+    <summary style="cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;">
+      <h3 style="margin:0;">가족 의견</h3>
+      <span style="font-size:0.8rem;color:var(--muted);">참고용 (클릭하여 펼치기)</span>
+    </summary>
+    <div class="vote-bar-container" style="margin-top:20px;">
       <div class="vote-labels">
         <span>수원 마이어스 (3명)</span>
         <span>신도림 베니비스 (2명)</span>
@@ -647,7 +652,7 @@
       <strong>수원파:</strong> 은진이네 하객 배려, 서울이 너무 북적이고 수원이 더 예쁨<br>
       <strong>신도림파:</strong> 서울 쪽 손님이 더 많아서 접근성 우선
     </div>
-  </div>
+  </details>
 </div>
 
 <!-- ==================== 상세 비교 ==================== -->
@@ -669,17 +674,17 @@
       <tr>
         <td>가능일</td>
         <td>4/3(토) 13:30</td>
-        <td>4/3(토), 4/4(일)<br>12:10 또는 13:20</td>
+        <td>4/3(토) 13:20</td>
       </tr>
       <tr>
         <td>대관+컨시어즈</td>
         <td class="highlight-cell"><strong>405만원</strong></td>
-        <td>토 590만 / 일 460만<br>(아스타는 -20만)</td>
+        <td><strong>540만원</strong></td>
       </tr>
       <tr>
         <td>식대</td>
         <td class="highlight-cell"><strong>6.1만원</strong></td>
-        <td>6.4만원</td>
+        <td>6.3만원</td>
       </tr>
       <tr>
         <td>식 간격</td>
@@ -709,7 +714,7 @@
       <tr>
         <td>계약 상태</td>
         <td class="highlight-cell"><strong>계약완료 (50만원 납부)</strong></td>
-        <td>미계약 (계약금 200만원)</td>
+        <td><strong>계약완료 (200만원 납부)</strong></td>
       </tr>
     </tbody>
   </table>
@@ -722,31 +727,19 @@
         <span class="contract-value">405 + (6.1 &times; 200) = <strong>1,625만원</strong></span>
       </div>
       <div class="contract-item">
-        <span class="contract-label">베니비스 그레이스 (토)</span>
-        <span class="contract-value">590 + (6.4 &times; 200) = <strong>1,870만원</strong></span>
-      </div>
-      <div class="contract-item">
-        <span class="contract-label">베니비스 그레이스 (일)</span>
-        <span class="contract-value">460 + (6.4 &times; 200) = <strong>1,740만원</strong></span>
-      </div>
-      <div class="contract-item">
         <span class="contract-label">베니비스 아스타 (토)</span>
-        <span class="contract-value">570 + (6.4 &times; 200) = <strong>1,850만원</strong></span>
+        <span class="contract-value">540 + (6.3 &times; 200) = <strong>1,800만원</strong></span>
       </div>
     </div>
     <div class="contract-card">
       <h4>비용 차이 요약</h4>
       <div class="contract-item">
         <span class="contract-label">토요일 기준 차이</span>
-        <span class="contract-value risk-high">베니비스가 +245만원</span>
+        <span class="contract-value risk-high">베니비스가 +175만원</span>
       </div>
       <div class="contract-item">
-        <span class="contract-label">일요일로 하면</span>
-        <span class="contract-value">베니비스가 +115만원</span>
-      </div>
-      <div class="contract-item">
-        <span class="contract-label">전환 시 추가 손실</span>
-        <span class="contract-value risk-high">마이어스 위약금 +50만원</span>
+        <span class="contract-label">한쪽 취소 시 손실</span>
+        <span class="contract-value">마이어스 50만원 / 베니비스 20만원</span>
       </div>
     </div>
   </div>
@@ -779,15 +772,18 @@
       <h4><span class="venue-badge badge-sindorim">신도림</span> 베니비스 후기</h4>
       <ul class="review-list">
         <li><span class="review-icon" style="color:var(--pro);">+</span>뷔페 맛있기로 유명 — 130가지 메뉴, 라이브 쿠킹 섹션</li>
-        <li><span class="review-icon" style="color:var(--pro);">+</span>신도림역 직결, 주차 2,500~2,500대 수용 (3시간 무료)</li>
+        <li><span class="review-icon" style="color:var(--pro);">+</span>신도림역 직결, 주차 2,500대 수용 (3시간 무료)</li>
         <li><span class="review-icon" style="color:var(--pro);">+</span>"동선 끝판왕" — 웨딩홀/대기실/연회장/메이크업 모두 7층</li>
         <li><span class="review-icon" style="color:var(--pro);">+</span>홀마다 단독 연회장, 다른 예식과 뷔페 안 섞임</li>
         <li><span class="review-icon" style="color:var(--pro);">+</span>생화 꽃장식 포함, 본식 스냅 패키지 제공</li>
+        <li><span class="review-icon" style="color:var(--pro);">+</span>플라워샤워 기계식 자동 작동 (별도 준비 불필요)</li>
         <li><span class="review-icon" style="color:var(--con);">&minus;</span>테크노마트 건물이 어수선하고 엘리베이터 대기 시간 김</li>
         <li><span class="review-icon" style="color:var(--con);">&minus;</span>천고(천장 높이)가 예상보다 낮다는 의견 다수</li>
+        <li><span class="review-icon" style="color:var(--con);">&minus;</span>주차 출차 시 줄 대기 (정산 후에도 오래 걸림)</li>
+        <li><span class="review-icon" style="color:var(--con);">&minus;</span>버진로드 낮아서 뒷줄 하객은 신랑신부 잘 안 보임</li>
       </ul>
       <div class="review-tip">
-        <strong>팁:</strong> 다이너스티홀이 가장 넓고 천고 높고 샹들리에 화려해서 가장 인기. 홀 3개라 청첩장에 홀 이름 정확히 명시 필요. 하객에게 엘리베이터 동선 미리 안내.
+        <strong>팁:</strong> 홀 3개라 청첩장에 홀 이름(아스타홀) 정확히 명시 필요. 하객에게 엘리베이터 동선 미리 안내.
       </div>
     </div>
   </div>
@@ -804,11 +800,6 @@
 
 <!-- ==================== 신도림 베니비스 갤러리 ==================== -->
 <div id="gallery-sindorim" class="section">
-  <div class="gallery-section">
-    <h3>다이너스티홀 <span class="hall-badge badge-sindorim">신도림 베니비스</span></h3>
-    <div class="gallery-grid" id="grid-sindorim-dynasty"></div>
-    <div class="video-grid" id="video-sindorim-dynasty"></div>
-  </div>
   <div class="gallery-section">
     <h3>아스타홀 <span class="hall-badge badge-sindorim">신도림 베니비스</span></h3>
     <div class="gallery-grid" id="grid-sindorim-asta"></div>
@@ -872,24 +863,17 @@ const galleries = {
       'KakaoTalk_Video_2026-03-29-02-24-52.mp4'
     ]
   },
-  'grid-sindorim-dynasty': {
-    path: 'media/syndorim_bennevis/dynasty_hall/',
-    photos: Array.from({length: 12}, (_, i) => {
-      const n = String(i + 1).padStart(3, '0');
-      const ts = i === 0 ? '02-23-17' : '02-23-18';
-      return `KakaoTalk_Photo_2026-03-29-${ts} ${n}.jpeg`;
-    }),
-    videos: [
-      'KakaoTalk_Video_2026-03-29-02-23-27.mp4',
-      'KakaoTalk_Video_2026-03-29-02-23-50.mp4'
-    ]
-  },
   'grid-sindorim-asta': {
     path: 'media/syndorim_bennevis/asta_hall/',
-    photos: Array.from({length: 10}, (_, i) => {
-      const n = String(i + 1).padStart(3, '0');
-      return `KakaoTalk_Photo_2026-03-29-02-26-03 ${n}.jpeg`;
-    }),
+    photos: [
+      'KakaoTalk_Photo_2026-03-29-02-23-17 001.jpeg',
+      'KakaoTalk_Photo_2026-03-29-02-23-18 005.jpeg',
+      'KakaoTalk_Photo_2026-03-29-02-23-18 011.jpeg',
+      ...Array.from({length: 10}, (_, i) => {
+        const n = String(i + 1).padStart(3, '0');
+        return `KakaoTalk_Photo_2026-03-29-02-26-03 ${n}.jpeg`;
+      })
+    ],
     videos: [
       'KakaoTalk_Video_2026-03-29-02-26-11.mp4',
       'KakaoTalk_Video_2026-03-29-02-26-23.mp4',
